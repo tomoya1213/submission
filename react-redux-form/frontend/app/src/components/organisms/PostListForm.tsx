@@ -50,9 +50,13 @@ const PostListForm: React.FC = () => {
         <tbody>
           {articles.map((article: any) => (
             <tr key={article.id}>
-              <td className="border-solid border border-black py-1">{article.title}</td>
-              <td className="border-solid border border-black py-1 pl-1">
-                <Link to={`/post/${article.article_id}`}>{article.content}</Link>
+              <td className="border-solid border border-black py-1">
+                {article.title.length > 15 ? `${article.title.substring(0, 15)}...` : article.title}
+              </td>
+              <td className="border-solid border border-black py-1 pl-1  break-all">
+                <Link to={`/post/${article.article_id}`}  className="link">
+                {article.content.length > 50 ? `${article.content.substring(0, 50)}...` : article.content}
+                </Link>
               </td>
             </tr>
           ))}

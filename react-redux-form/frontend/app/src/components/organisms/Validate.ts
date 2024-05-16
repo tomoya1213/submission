@@ -31,6 +31,8 @@ export const validatePasswordConfirm = (password: string, passwordConfirm: strin
 export const validateNickname = (nickname: string) => {
   if (!nickname) {
     return "ニックネームを入力してください";
+  } else if (nickname.length > 20) {
+    return "タイトルは20文字以内で入力してください";
   }
 };
 
@@ -38,6 +40,8 @@ export const validateNickname = (nickname: string) => {
 export const validateNewPostTitle = (newPostTitle: string) => {
   if (!newPostTitle) {
     return "タイトルを入力してください";
+  } else if (newPostTitle.length > 20) {
+    return "タイトルは20文字以内で入力してください";
   }
 };
 
@@ -45,5 +49,7 @@ export const validateNewPostTitle = (newPostTitle: string) => {
 export const validateNewPostContent = (newPostContent: string) => {
   if (!newPostContent) {
     return "内容を入力してください";
+  } else if (newPostContent.length > 300) {
+    return "内容は200文字以内で入力してください";
   }
 };
