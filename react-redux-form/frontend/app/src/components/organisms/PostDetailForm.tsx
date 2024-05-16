@@ -38,10 +38,10 @@ const PostDetailForm: React.FC = () => {
   return (
     <div>
       <h1 className="text-center text-3xl my-6">投稿詳細画面</h1>
-      <div className="border">
-        <h2>投稿者: {post.name}</h2>
-        <p>タイトル：{post.title}</p>
-        <p>内容：{post.content}</p>
+      <div className="border break-all py-6 px-4">
+        <h2 className="py-6 font-bold">投稿者: <span className="font-normal">{post.name}</span></h2>
+        <p className="font-bold">タイトル：<span className="font-normal">{post.title}</span></p>
+        <p className="py-6 font-bold">内容：<span className="font-normal">{post.content}</span></p>
       </div>
     </div>
   );

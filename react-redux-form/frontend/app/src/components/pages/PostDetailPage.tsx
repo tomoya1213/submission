@@ -1,6 +1,6 @@
 import React from "react";
 import MainLayout from "../templates/MainLayout";
-import PostDetailForm from "../molecules/PostDetailForm";
+import PostDetailForm from "../organisms/PostDetailForm";
 
 const ArticleDetailPage: React.FC = () => {
   return(
