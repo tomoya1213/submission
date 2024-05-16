@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .width-6 {
+    width: 6%;
+  }
+}
+
+.margin-left {
+  margin-left: auto;
+  width: 100px;
+}
+
+.width-100 {
+  width: 100px;
+}
+
+@media (max-width: 768px) {
+  .flex-column {
+    flex-direction: column;
+    text-align: center;
+    width: 100px;
+    margin: 32px auto;
+    gap: 30px;
+  }
+}
+
