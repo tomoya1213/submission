@@ -71,7 +71,7 @@ const LoginForm: React.FC = () => {
   useEffect(() => {
     const checkTokenValidity = async () => {
       try {
-        const response = await axios.get('/api/login/checkToken');
+        const response = await axios.get('/api/checkToken');
         if (!response.data.valid) {
           // トークンの有効性が失われた場合、ログアウト処理を実行
           localStorage.removeItem('access_token');
