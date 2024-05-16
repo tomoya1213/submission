@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios, { AxiosError } from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { UserIcon } from "@heroicons/react/24/solid";
+import { logout } from "../../features/authSlice";
 
 type UserInfo = {
   name: string;
@@ -12,6 +13,7 @@ type UserInfo = {
 };
 
 const MyPage: React.FC = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
@@ -19,6 +21,7 @@ const MyPage: React.FC = () => {
   useEffect(() => {
     if (!isLoggedIn) {
       navigate("/login"); // ログインされていない場合はログインページにリダイレクト
+      return;
     }
 
     const fetchUserInfo = async () => {
@@ -45,8 +48,19 @@ const MyPage: React.FC = () => {
       }
     };
 
-    fetchUserInfo();
-  }, [navigate, isLoggedIn]);
+    const timer = setTimeout(() => {
+      if (!userInfo) {
+        navigate("/"); // ユーザー情報が取得できない場合はトップページに遷移
+        dispatch(logout());
+      }
+    }, 2000); // 2秒後にトップページに遷移
+  
+    if (!userInfo) { // userInfoが存在しない場合にのみfetchUserInfoを呼び出す
+      fetchUserInfo();
+    }
+  
+    return () => clearTimeout(timer);
+  }, [navigate, dispatch, userInfo, isLoggedIn]);
 
   if (!isLoggedIn) {
     return <p>ログインしてください。 <Link to="/login">ログイン</Link></p>; // ログインしていない場合はログインリンクを表示
