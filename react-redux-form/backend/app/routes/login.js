@@ -28,8 +28,9 @@ router.post('/login', async (req, res) => {
         }
         // ユーザーが見つかった場合
         const user = result[0].name;
-        const token = jwt.sign({ userId: user.user_id }, 'secret_key', { expiresIn: '1h' });
-        res.status(200).json({ token, user });
+        const expiresIn = 3600; // 有効期限を1時間に設定（秒単位）
+        const token = jwt.sign({ userId: user.user_id }, 'secret_key', { expiresIn });
+        res.status(200).json({ token, user, expiresIn });
         console.log(token);
       });
     });
@@ -44,14 +45,14 @@ router.get('/checkToken', (req, res) => {
   try {
     const token = req.headers.authorization.split(' ')[1]; // リクエストヘッダーからトークンを取得
     if (!token) {
-      res.status(401).json({ message: 'Unauthorized' });
+      res.status(200).json({ valid: false, message: 'Unauthorized' }); // トークンが存在しない場合200を返す
       return;
     }
     jwt.verify(token, 'secret_key', (err, decoded) => {
       if (err) {
-        res.status(401).json({ message: 'Invalid token' });
+        res.status(200).json({ valid: false, message: 'Invalid token' }); // トークンが無効な場合も200を返す
       } else {
-        res.status(200).json({ valid: true });
+        res.status(401).json({ valid: true });
       }
     });
   } catch (error) {

@@ -68,29 +68,6 @@ const LoginForm: React.FC = () => {
     dispatch(setPassword(''));
   };
 
-  useEffect(() => {
-    const checkTokenValidity = async () => {
-      try {
-        const response = await axios.get('/api/checkToken');
-        if (!response.data.valid) {
-          // トークンの有効性が失われた場合、ログアウト処理を実行
-          localStorage.removeItem('access_token');
-          axios.defaults.headers.common["Authorization"] = ``;
-          dispatch(setUserName(''));
-          dispatch(login());
-          navigate('/login');
-        }
-      } catch (error) {
-        console.error('トークンの確認に失敗しました。エラーメッセージ:', error);
-      }
-    };
-
-    // 60秒ごとにトークンの有効性を確認
-    const interval = setInterval(checkTokenValidity, 60000);
-
-    return () => clearInterval(interval);
-  }, [dispatch, navigate]);
-
   return (
     <div>
       <form onSubmit={handleSubmit}>
