@@ -19,7 +19,7 @@ const Header = () => {
 
   const handleLogout = () => {
     // ログアウト時にローカルストレージからトークンを削除する
-    localStorage.removeItem("token");
+    localStorage.removeItem("access_token");
     dispatch(logout());
   };
 
